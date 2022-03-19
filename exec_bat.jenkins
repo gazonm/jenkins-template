@@ -1,0 +1,23 @@
+#!groovy
+//run
+properties([disableConcurrentBuilds()])
+
+pipeline {
+	agent {
+		label 'master'
+	}
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+		timestamps()
+	}
+	stages {
+		stage("exec windows batch") {
+			steps {
+				echo " ============= start pipeline ============="
+				dir("scripts") {
+					bat 'echo ptintout!'
+				}
+			}
+		}
+	}
+}
